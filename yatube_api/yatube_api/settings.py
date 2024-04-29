@@ -11,13 +11,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # DRF apps
     "rest_framework",
+    "rest_framework.authtoken",
+    # Custom apps
     "api",
     "posts",
 ]
