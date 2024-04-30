@@ -145,6 +145,7 @@ dmypy.json
 
 .mypy_cache
 .ruff_cache
+ruff.toml
 
 # папки со статикой и медиа
 media/

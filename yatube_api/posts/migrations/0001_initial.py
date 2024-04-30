@@ -30,7 +30,12 @@ class Migration(migrations.Migration):
                         auto_now_add=True, verbose_name="Дата публикации"
                     ),
                 ),
-                ("image", models.ImageField(blank=True, null=True, upload_to="posts/")),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True, null=True, upload_to="posts/"
+                    ),
+                ),
                 (
                     "author",
                     models.ForeignKey(
@@ -57,7 +62,9 @@ class Migration(migrations.Migration):
                 (
                     "created",
                     models.DateTimeField(
-                        auto_now_add=True, db_index=True, verbose_name="Дата добавления"
+                        auto_now_add=True,
+                        db_index=True,
+                        verbose_name="Дата добавления",
                     ),
                 ),
                 (

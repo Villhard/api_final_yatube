@@ -1,13 +1,17 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import SearchFilter
 
 from posts.models import Post, Group, Follow, User
-from api.serializers import PostSerializer, CommentSerializer, GroupSerializer, FollowSerializer
+from api.serializers import (
+    PostSerializer,
+    CommentSerializer,
+    GroupSerializer,
+    FollowSerializer,
+)
 from api.permissions import IsAuthorOrReadOnly
 
 
@@ -62,7 +66,9 @@ class FollowViewSet(viewsets.ModelViewSet):
         return Follow.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        following = get_object_or_404(User, username=self.request.data.get("following"))
+        following = get_object_or_404(
+            User, username=self.request.data.get("following")
+        )
         user = self.request.user
         if user == following:
             raise ValidationError("Нельзя подписаться на самого себя")

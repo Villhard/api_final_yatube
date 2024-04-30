@@ -42,7 +42,9 @@ class TestCommentAPI:
             f"`{self.comments_url}` возвращает ответ со статусом 200."
         )
 
-    def test_comment_single_not_authenticated(self, client, post, comment_1_post):
+    def test_comment_single_not_authenticated(
+        self, client, post, comment_1_post
+    ):
         response = client.get(
             self.comment_detail_url.format(
                 post_id=post.id, comment_id=comment_1_post.id
@@ -72,7 +74,12 @@ class TestCommentAPI:
         )
 
     def test_comments_get(
-        self, user_client, post, comment_1_post, comment_2_post, comment_1_another_post
+        self,
+        user_client,
+        post,
+        comment_1_post,
+        comment_2_post,
+        comment_1_another_post,
     ):
         response = user_client.get(self.comments_url.format(post_id=post.id))
         assert response.status_code == HTTPStatus.OK, (
@@ -93,7 +100,9 @@ class TestCommentAPI:
         comment = Comment.objects.filter(post=post).first()
         test_comment = test_data[0]
         self.check_comment_data(
-            test_comment, f"GET-запросе к `{self.comments_url}`", db_comment=comment
+            test_comment,
+            f"GET-запросе к `{self.comments_url}`",
+            db_comment=comment,
         )
 
     def test_comment_create_by_unauth(self, client, post, comment_1_post):
@@ -105,11 +114,16 @@ class TestCommentAPI:
         )
         data = {"text": self.TEXT_FOR_COMMENT}
         try:
-            response = client.post(self.comments_url.format(post_id=post.id), data=data)
+            response = client.post(
+                self.comments_url.format(post_id=post.id), data=data
+            )
         except ValueError as error:
             raise AssertionError(
                 assert_msg
-                + ("\nВ процессе выполнения запроса произошла ошибка: " f"{error}")
+                + (
+                    "\nВ процессе выполнения запроса произошла ошибка: "
+                    f"{error}"
+                )
             )
         assert response.status_code == HTTPStatus.UNAUTHORIZED, assert_msg
         assert comment_cnt == Comment.objects.count(), (
@@ -151,7 +165,9 @@ class TestCommentAPI:
             f"`{self.comments_url}` возвращает ответ, содержащий текст нового "
             "комментария в неизменном виде."
         )
-        self.check_comment_data(test_data, f"POST-запросе к `{self.comments_url}`")
+        self.check_comment_data(
+            test_data, f"POST-запросе к `{self.comments_url}`"
+        )
 
         assert test_data.get("author") == user.username, (
             "Проверьте, что при создании комментария через POST-запрос к "
@@ -166,7 +182,9 @@ class TestCommentAPI:
     def test_comments_auth_post_with_invalid_data(self, user_client, post):
         comments_count = Comment.objects.count()
 
-        response = user_client.post(self.comments_url.format(post_id=post.id), data={})
+        response = user_client.post(
+            self.comments_url.format(post_id=post.id), data={}
+        )
         assert response.status_code == HTTPStatus.BAD_REQUEST, (
             "Проверьте, что POST-запрос с некорректными данными от "
             f"авторизованного пользователя к `{self.comments_url}` возвращает "
@@ -178,7 +196,9 @@ class TestCommentAPI:
         )
 
     def test_comment_author_and_post_are_read_only(self, user_client, post):
-        response = user_client.post(self.comments_url.format(post_id=post.id), data={})
+        response = user_client.post(
+            self.comments_url.format(post_id=post.id), data={}
+        )
         assert response.status_code == HTTPStatus.BAD_REQUEST, (
             "Проверьте, что POST-запрос с некорректными данными от "
             f"авторизованного пользователя к `{self.comments_url}` возвращает "
@@ -190,7 +210,9 @@ class TestCommentAPI:
             '`author` и `post` установлен свойство "Только для чтения".'
         )
 
-    def test_comment_id_auth_get(self, user_client, post, comment_1_post, user):
+    def test_comment_id_auth_get(
+        self, user_client, post, comment_1_post, user
+    ):
         response = user_client.get(
             self.comment_detail_url.format(
                 post_id=post.id, comment_id=comment_1_post.id
@@ -301,7 +323,9 @@ class TestCommentAPI:
             f"`{self.comment_detail_url}` удаляет комментарий."
         )
 
-    def test_comment_delete_by_not_author(self, user_client, post, comment_2_post):
+    def test_comment_delete_by_not_author(
+        self, user_client, post, comment_2_post
+    ):
         response = user_client.delete(
             self.comment_detail_url.format(
                 post_id=post.id, comment_id=comment_2_post.id

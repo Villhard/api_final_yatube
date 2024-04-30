@@ -34,7 +34,9 @@ pytest_plugins = [
 # test .md
 default_md = "# api_final\napi final\n"
 filename = "README.md"
-assert filename in root_dir_content, f"В корне проекта не найден файл `{filename}.`"
+assert (
+    filename in root_dir_content
+), f"В корне проекта не найден файл `{filename}.`"
 
 with open(filename, "r", errors="ignore") as f:
     file = f.read()

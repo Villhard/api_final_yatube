@@ -47,7 +47,10 @@ class TestJWT:
             )
 
         invalid_data = (
-            {"username": "invalid_username_not_exists", "password": "invalid pwd"},
+            {
+                "username": "invalid_username_not_exists",
+                "password": "invalid pwd",
+            },
             {"username": user.username, "password": "invalid pwd"},
         )
         field = "detail"
@@ -116,7 +119,10 @@ class TestJWT:
         response = client.post(self.url_create, data=valid_data)
         response_data = response.json()
 
-        for token in (response_data.get("access"), response_data.get("refresh")):
+        for token in (
+            response_data.get("access"),
+            response_data.get("refresh"),
+        ):
             response = client.post(url, data={"token": token})
             assert response.status_code == HTTPStatus.OK, (
                 "Убедитесь, что POST-запрос с корректными данными, "

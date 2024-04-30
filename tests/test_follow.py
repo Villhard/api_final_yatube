@@ -14,7 +14,8 @@ class TestFollowAPI:
         response = user_client.get(self.url)
 
         assert response.status_code != HTTPStatus.NOT_FOUND, (
-            f"Эндпоинт `{self.url}` не найден, проверьте настройки в " "*urls.py*."
+            f"Эндпоинт `{self.url}` не найден, проверьте настройки в "
+            "*urls.py*."
         )
 
     def test_follow_not_auth(self, client, follow_1, follow_2):
@@ -117,10 +118,13 @@ class TestFollowAPI:
         assert type(test_data) == dict, msg_error.format(additional_msg="")
         assert test_data.get("user") == user.username, msg_error.format(
             additional_msg=(
-                "Сейчас ключ `user` отстутствует или " "содержит некорректное значение."
+                "Сейчас ключ `user` отстутствует или "
+                "содержит некорректное значение."
             )
         )
-        assert test_data.get("following") == data["following"], msg_error.format(
+        assert (
+            test_data.get("following") == data["following"]
+        ), msg_error.format(
             additional_msg=(
                 "Сейчас ключ `following` отстутствует или "
                 "содержит некорректное значение."
@@ -172,7 +176,8 @@ class TestFollowAPI:
 
         response = user_client.get(self.url)
         assert response.status_code != HTTPStatus.NOT_FOUND, (
-            f"Эндпоинт `{self.url}` не найден, проверьте настройки в " "*urls.py*."
+            f"Эндпоинт `{self.url}` не найден, проверьте настройки в "
+            "*urls.py*."
         )
 
         expected_len = user_follows.filter(following=user_2).count()
@@ -183,7 +188,9 @@ class TestFollowAPI:
             "те подписки, которые удовлетворяют параметрам поиска."
         )
 
-        response = user_client.get(f"{self.url}?search={another_user.username}")
+        response = user_client.get(
+            f"{self.url}?search={another_user.username}"
+        )
         expected_len = user_follows.filter(following=another_user).count()
         assert len(response.json()) == expected_len, (
             "Проверьте, что для авторизованного пользователя ответ на "

@@ -48,14 +48,18 @@ class TestGroupAPI:
         )
 
     def test_group_page_not_found(self, client, group_1):
-        response = client.get(self.group_detail_url.format(group_id=group_1.id))
+        response = client.get(
+            self.group_detail_url.format(group_id=group_1.id)
+        )
         assert response.status_code != HTTPStatus.NOT_FOUND, (
             f"Эндпоинт `{self.group_detail_url}` не найден, проверьте "
             "настройки в *urls.py*."
         )
 
     def test_group_single_not_auth(self, client, group_1):
-        response = client.get(self.group_detail_url.format(group_id=group_1.id))
+        response = client.get(
+            self.group_detail_url.format(group_id=group_1.id)
+        )
         assert response.status_code == HTTPStatus.OK, (
             "Проверьте, что GET-запрос неавторизованного пользователя к "
             f"`{self.group_detail_url}` возвращает ответ со статусом 200."
@@ -93,7 +97,9 @@ class TestGroupAPI:
         )
 
     def test_group_page_auth_get(self, user_client, group_1):
-        response = user_client.get(self.group_detail_url.format(group_id=group_1.id))
+        response = user_client.get(
+            self.group_detail_url.format(group_id=group_1.id)
+        )
         assert response.status_code == HTTPStatus.OK, (
             "Проверьте, что при GET-запросе авторизованного пользователя к "
             f"`{self.group_detail_url}` возвращается ответ со статусом 200."
