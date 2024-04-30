@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
 from posts.models import Post, Group
@@ -11,6 +12,8 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAuthorOrReadOnly,)
+    pagination_class = LimitOffsetPagination
+    page_size = 100
 
     def perform_create(self, serializer):
         author = self.request.user
