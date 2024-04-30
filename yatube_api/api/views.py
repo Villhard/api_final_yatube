@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from rest_framework.filters import SearchFilter
 
 from posts.models import Post, Group, Follow, User
 from api.serializers import PostSerializer, CommentSerializer, GroupSerializer, FollowSerializer
@@ -53,6 +54,8 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (SearchFilter,)
+    search_fields = ("following__username",)
 
     def get_queryset(self):
         user = self.request.user
