@@ -19,3 +19,10 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     text = models.TextField()
     created = models.DateTimeField("Дата добавления", auto_now_add=True, db_index=True)
+
+
+class Group(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=50, unique=True)
+    description = models.TextField()
+    users = models.ManyToManyField(User, related_name="communities")
