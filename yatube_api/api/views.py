@@ -63,7 +63,7 @@ class FollowViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Follow.objects.filter(user=user)
+        return user.follower.all()
 
     def perform_create(self, serializer):
         following = get_object_or_404(
