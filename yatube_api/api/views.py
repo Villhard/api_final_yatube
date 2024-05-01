@@ -70,8 +70,4 @@ class FollowViewSet(viewsets.ModelViewSet):
             User, username=self.request.data.get("following")
         )
         user = self.request.user
-        if user == following:
-            raise ValidationError("Нельзя подписаться на самого себя")
-        if Follow.objects.filter(user=user, following=following).exists():
-            raise ValidationError("Вы уже подписаны на этого пользователя")
         serializer.save(user=user, following=following)
